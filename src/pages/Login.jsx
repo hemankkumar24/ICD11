@@ -4,9 +4,14 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const navigate = useNavigate()
   const [userType, setUserType] = useState(null)
+  const [loginMethod, setLoginMethod] = useState(null) // 'credentials', 'hpr', 'abha', 'aadhaar'
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
+    hprId: '',
+    abhaId: '',
+    aadhaarId: '',
+    otp: ''
   })
 
   const handleInputChange = (e) => {
@@ -18,9 +23,21 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log('Login attempt:', { userType, ...formData })
+    console.log('Login attempt:', { userType, loginMethod, ...formData })
     navigate('/dashboard')
+  }
+
+  const resetForm = () => {
+    setUserType(null)
+    setLoginMethod(null)
+    setFormData({
+      email: '',
+      password: '',
+      hprId: '',
+      abhaId: '',
+      aadhaarId: '',
+      otp: ''
+    })
   }
 
   return (
@@ -62,8 +79,8 @@ const Login = () => {
                       </svg>
                     </div>
                     <div className="text-left">
-                      <h3 className="text-lg font-semibold text-gray-900">Doctor</h3>
-                      <p className="text-sm text-gray-500">Access patient records & diagnoses</p>
+                      <h3 className="text-lg font-semibold text-gray-900">Healthcare Professional</h3>
+                      <p className="text-sm text-gray-500">Login with HPR ID</p>
                     </div>
                     <svg className="w-5 h-5 text-gray-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -84,7 +101,7 @@ const Login = () => {
                     </div>
                     <div className="text-left">
                       <h3 className="text-lg font-semibold text-gray-900">Patient</h3>
-                      <p className="text-sm text-gray-500">View your health records</p>
+                      <p className="text-sm text-gray-500">Login with ABHA ID or Aadhaar</p>
                     </div>
                     <svg className="w-5 h-5 text-gray-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -98,11 +115,11 @@ const Login = () => {
                 <a href="#" className="text-sky-600 hover:text-sky-700 font-medium">Sign up</a>
               </p>
             </div>
-          ) : (
-            // Login Form
+          ) : !loginMethod ? (
+            // Login Method Selection
             <div className="bg-white rounded-3xl p-8 shadow-lg">
               <button
-                onClick={() => setUserType(null)}
+                onClick={resetForm}
                 className="cursor-pointer flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-6 transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -127,91 +144,311 @@ const Login = () => {
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold text-gray-900">
-                    {userType === 'doctor' ? 'Doctor Login' : 'Patient Login'}
+                    {userType === 'doctor' ? 'Healthcare Professional' : 'Patient Login'}
                   </h1>
-                  <p className="text-gray-500 text-sm">Enter your credentials to continue</p>
+                  <p className="text-gray-500 text-sm">Choose your login method</p>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                {userType === 'doctor' ? (
+                  <>
+                    {/* HPR ID Login */}
+                    <button
+                      onClick={() => setLoginMethod('hpr')}
+                      className="cursor-pointer w-full p-4 bg-sky-50 rounded-xl border-2 border-transparent hover:border-sky-400 transition-all flex items-center gap-3"
+                    >
+                      <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
+                        <svg className="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                        </svg>
+                      </div>
+                      <div className="text-left flex-1">
+                        <h3 className="font-semibold text-gray-900">HPR ID</h3>
+                        <p className="text-xs text-gray-500">Healthcare Professionals Registry</p>
+                      </div>
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+
+                    {/* Email/Password Login for Doctor */}
+                    <button
+                      onClick={() => setLoginMethod('credentials')}
+                      className="cursor-pointer w-full p-4 bg-gray-50 rounded-xl border-2 border-transparent hover:border-gray-300 transition-all flex items-center gap-3"
+                    >
+                      <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                        <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div className="text-left flex-1">
+                        <h3 className="font-semibold text-gray-900">Email & Password</h3>
+                        <p className="text-xs text-gray-500">Use registered credentials</p>
+                      </div>
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {/* ABHA Health ID Login */}
+                    <button
+                      onClick={() => setLoginMethod('abha')}
+                      className="cursor-pointer w-full p-4 bg-emerald-50 rounded-xl border-2 border-transparent hover:border-emerald-400 transition-all flex items-center gap-3"
+                    >
+                      <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                      </div>
+                      <div className="text-left flex-1">
+                        <h3 className="font-semibold text-gray-900">ABHA Health ID</h3>
+                        <p className="text-xs text-gray-500">Ayushman Bharat Health Account</p>
+                      </div>
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+
+                    {/* Aadhaar Login */}
+                    <button
+                      onClick={() => setLoginMethod('aadhaar')}
+                      className="cursor-pointer w-full p-4 bg-orange-50 rounded-xl border-2 border-transparent hover:border-orange-400 transition-all flex items-center gap-3"
+                    >
+                      <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                        </svg>
+                      </div>
+                      <div className="text-left flex-1">
+                        <h3 className="font-semibold text-gray-900">Aadhaar</h3>
+                        <p className="text-xs text-gray-500">Verify with Aadhaar OTP</p>
+                      </div>
+                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          ) : (
+            // Login Form based on method
+            <div className="bg-white rounded-3xl p-8 shadow-lg">
+              <button
+                onClick={() => setLoginMethod(null)}
+                className="cursor-pointer flex items-center gap-2 text-gray-500 hover:text-gray-700 mb-6 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                Back
+              </button>
+
+              <div className="flex items-center gap-3 mb-6">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  loginMethod === 'hpr' ? 'bg-sky-100' :
+                  loginMethod === 'abha' ? 'bg-emerald-100' :
+                  loginMethod === 'aadhaar' ? 'bg-orange-100' : 'bg-gray-100'
+                }`}>
+                  {loginMethod === 'hpr' && (
+                    <svg className="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+                    </svg>
+                  )}
+                  {loginMethod === 'abha' && (
+                    <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  )}
+                  {loginMethod === 'aadhaar' && (
+                    <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  )}
+                  {loginMethod === 'credentials' && (
+                    <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  )}
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">
+                    {loginMethod === 'hpr' && 'HPR ID Login'}
+                    {loginMethod === 'abha' && 'ABHA Health ID Login'}
+                    {loginMethod === 'aadhaar' && 'Aadhaar Login'}
+                    {loginMethod === 'credentials' && 'Email Login'}
+                  </h1>
+                  <p className="text-gray-500 text-sm">
+                    {loginMethod === 'hpr' && 'Enter your HPR ID to continue'}
+                    {loginMethod === 'abha' && 'Enter your 14-digit ABHA number'}
+                    {loginMethod === 'aadhaar' && 'Enter your 12-digit Aadhaar number'}
+                    {loginMethod === 'credentials' && 'Enter your email and password'}
+                  </p>
                 </div>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none transition-all"
-                    placeholder="Enter your email"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Password
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none transition-all"
-                    placeholder="Enter your password"
-                    required
-                  />
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500" />
-                    <span className="text-sm text-gray-600">Remember me</span>
-                  </label>
-                  <a href="#" className="text-sm text-sky-600 hover:text-sky-700 font-medium">
-                    Forgot password?
-                  </a>
-                </div>
-
-                <button
-                  type="submit"
-                  className={`cursor-pointer w-full py-3.5 rounded-xl font-semibold text-white transition-colors ${
-                    userType === 'doctor' 
-                      ? 'bg-sky-500 hover:bg-sky-600' 
-                      : 'bg-emerald-500 hover:bg-emerald-600'
-                  }`}
-                >
-                  Sign In
-                </button>
-
-                {userType === 'doctor' && (
-                  <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-gray-200"></div>
+                {loginMethod === 'credentials' && (
+                  <>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none transition-all"
+                        placeholder="Enter your email"
+                        required
+                      />
                     </div>
-                    <div className="relative flex justify-center text-sm">
-                      <span className="px-2 bg-white text-gray-500">or continue with</span>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Password
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleInputChange}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none transition-all"
+                        placeholder="Enter your password"
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+
+                {loginMethod === 'hpr' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      HPR ID Number
+                    </label>
+                    <input
+                      type="text"
+                      name="hprId"
+                      value={formData.hprId}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-sky-400 focus:ring-2 focus:ring-sky-100 outline-none transition-all"
+                      placeholder="Enter your HPR ID (e.g., 12-3456-7890-1234)"
+                      required
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      Your unique Healthcare Professionals Registry ID
+                    </p>
+                  </div>
+                )}
+
+                {loginMethod === 'abha' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      ABHA Number
+                    </label>
+                    <input
+                      type="text"
+                      name="abhaId"
+                      value={formData.abhaId}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100 outline-none transition-all"
+                      placeholder="Enter 14-digit ABHA number"
+                      maxLength={14}
+                      required
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      Your Ayushman Bharat Health Account number
+                    </p>
+                  </div>
+                )}
+
+                {loginMethod === 'aadhaar' && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Aadhaar Number
+                    </label>
+                    <input
+                      type="text"
+                      name="aadhaarId"
+                      value={formData.aadhaarId}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-400 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                      placeholder="Enter 12-digit Aadhaar number"
+                      maxLength={12}
+                      required
+                    />
+                    <p className="text-xs text-gray-500 mt-2">
+                      OTP will be sent to your Aadhaar-linked mobile
+                    </p>
+                  </div>
+                )}
+
+                {(loginMethod === 'hpr' || loginMethod === 'abha' || loginMethod === 'aadhaar') && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      OTP
+                    </label>
+                    <input
+                      type="text"
+                      name="otp"
+                      value={formData.otp}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gray-400 focus:ring-2 focus:ring-gray-100 outline-none transition-all tracking-widest text-center text-lg"
+                      placeholder="• • • • • •"
+                      maxLength={6}
+                    />
+                    <div className="flex justify-between items-center mt-2">
+                      <p className="text-xs text-gray-500">Enter 6-digit OTP</p>
+                      <button type="button" className="text-xs text-sky-600 hover:text-sky-700 font-medium cursor-pointer">
+                        Send OTP
+                      </button>
                     </div>
                   </div>
                 )}
 
-                {userType === 'doctor' && (
-                  <button
-                    type="button"
-                    className="cursor-pointer w-full py-3 rounded-xl border border-gray-200 font-medium text-gray-700 hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                    </svg>
-                    Sign in with ABHA ID
-                  </button>
+                {loginMethod === 'credentials' && (
+                  <div className="flex items-center justify-between">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-sky-600 focus:ring-sky-500" />
+                      <span className="text-sm text-gray-600">Remember me</span>
+                    </label>
+                    <a href="#" className="text-sm text-sky-600 hover:text-sky-700 font-medium">
+                      Forgot password?
+                    </a>
+                  </div>
                 )}
+
+                <button
+                  type="submit"
+                  className={`cursor-pointer w-full py-3.5 rounded-xl font-semibold text-white transition-colors ${
+                    loginMethod === 'hpr' || loginMethod === 'credentials' ? 'bg-sky-500 hover:bg-sky-600' :
+                    loginMethod === 'abha' ? 'bg-emerald-500 hover:bg-emerald-600' :
+                    'bg-orange-500 hover:bg-orange-600'
+                  }`}
+                >
+                  {loginMethod === 'credentials' ? 'Sign In' : 'Verify & Continue'}
+                </button>
               </form>
 
               <p className="text-center text-sm text-gray-500 mt-6">
-                Don't have an account?{' '}
-                <a href="#" className="text-sky-600 hover:text-sky-700 font-medium">Sign up</a>
+                {userType === 'doctor' ? (
+                  <>
+                    Don't have an HPR ID?{' '}
+                    <a href="https://hpr.ndhm.gov.in" target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:text-sky-700 font-medium">
+                      Register on HPR
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    Don't have an ABHA ID?{' '}
+                    <a href="https://abha.abdm.gov.in" target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 font-medium">
+                      Create ABHA
+                    </a>
+                  </>
+                )}
               </p>
             </div>
           )}
