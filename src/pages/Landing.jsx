@@ -7,139 +7,234 @@ const Landing = () => {
   const features = [
     {
       title: 'NAMASTE CodeSystem',
-      description: '4,500+ standardized terms for Ayurveda, Siddha, and Unani disorders',
-      icon: '📋'
+      description: '30,000+ standardized terms for Ayurveda, Siddha, and Unani disorders',
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      )
     },
     {
       title: 'ICD-11 TM2 Integration',
       description: '529 disorder categories and 196 pattern codes from WHO Traditional Medicine Module 2',
-      icon: '🌐'
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+        </svg>
+      )
     },
     {
       title: 'FHIR R4 Compliant',
       description: "Full compliance with India's 2016 EHR Standards and FHIR R4 APIs",
-      icon: '✅'
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )
     },
     {
       title: 'Auto-complete Lookup',
       description: 'REST endpoint for real-time value-set lookup and terminology search',
-      icon: '🔍'
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      )
     },
     {
       title: 'Dual-Coding Support',
       description: 'Map NAMASTE codes to ICD-11 TM2 and Biomedicine for interoperability',
-      icon: '🔄'
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+        </svg>
+      )
     },
     {
       title: 'OAuth 2.0 & ABHA',
       description: 'Secure access with ABHA tokens and audit-ready metadata',
-      icon: '🔐'
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+        </svg>
+      )
     }
   ]
 
-  const apiEndpoints = [
-    { method: 'GET', endpoint: '/api/namaste/search', description: 'Auto-complete value-set lookup' },
-    { method: 'GET', endpoint: '/api/icd11/tm2/search', description: 'Search TM2 disorder codes' },
-    { method: 'POST', endpoint: '/api/translate/namaste-to-tm2', description: 'NAMASTE → TM2 translation' },
-    { method: 'POST', endpoint: '/api/fhir/bundle', description: 'Upload FHIR Bundle with dual codes' },
-    { method: 'GET', endpoint: '/api/fhir/CodeSystem/namaste', description: 'FHIR CodeSystem resource' },
-    { method: 'GET', endpoint: '/api/fhir/ConceptMap/namaste-tm2', description: 'FHIR ConceptMap resource' }
-  ]
-
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#f0f5ff]">
       {/* Hero Section */}
-      <header className="bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white pb-20">
-        <nav className="flex justify-between items-center px-6 md:px-10 py-5">
-          <div className="flex items-center gap-3 text-xl md:text-2xl font-bold">
-            <span className="text-3xl">🏥</span>
-            <span>NAMASTE-ICD11 API</span>
+      <section className="px-8 md:px-16 lg:px-24 pt-12 pb-8">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-16">
+          <div className="flex items-center gap-2">
+            <div className="w-9 h-9 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-200">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+            </div>
+            <span className="text-xl font-bold text-gray-800">Med Link</span>
           </div>
-          <button 
-            className="bg-white/15 border border-white/30 px-5 py-2.5 rounded-lg hover:bg-white/25 transition-all duration-300"
-            onClick={() => navigate('/dashboard')}
+          <button
+            onClick={() => navigate('/login')}
+            className="cursor-pointer bg-gray-900 text-white px-5 py-2.5 rounded-full font-medium flex items-center gap-2 hover:bg-gray-800 transition-colors"
           >
-            Dashboard →
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            Login
           </button>
-        </nav>
-        
-        <div className="text-center px-5 py-16 max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
-            NAMASTE & ICD-11 TM2 Integration API
-          </h1>
-          <p className="text-lg md:text-xl opacity-90 mb-8 max-w-3xl mx-auto">
-            A lightweight FHIR R4–compliant terminology micro-service bridging India's AYUSH 
-            terminologies with WHO's International Classification of Diseases
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <button 
-              className="bg-green-500 hover:bg-green-600 text-white px-8 py-3.5 rounded-lg text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5"
-              onClick={() => navigate('/dashboard')}
-            >
-              Try the API
-            </button>
-            <a 
-              href="#features" 
-              className="border-2 border-white px-8 py-3 rounded-lg text-lg hover:bg-white/10 transition-all duration-300"
-            >
-              Learn More
-            </a>
+        </div>
+
+        {/* Hero Content */}
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left Side - Headline */}
+          <div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-[1.1] tracking-tight">
+              Unified terminology
+              <br />
+              API for healthcare
+            </h1>
           </div>
-          
-          <div className="flex gap-3 justify-center flex-wrap">
-            {['FHIR R4', 'EHR 2016 Standards', 'WHO ICD-11', 'ABHA Compatible'].map((badge) => (
-              <span key={badge} className="bg-white/15 border border-white/20 px-4 py-1.5 rounded-full text-sm">
-                {badge}
-              </span>
-            ))}
+
+          {/* Right Side - Description & CTAs */}
+          <div className="lg:pt-4">
+            <p className="text-gray-600 text-lg mb-6 max-w-md">
+              FHIR R4–compliant micro-service bridging India's AYUSH terminologies with WHO's ICD-11 Traditional Medicine Module 2.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <button 
+                onClick={() => navigate('/dashboard')}
+                className="cursor-pointer bg-gray-900 text-white px-6 py-3 rounded-full font-medium flex items-center gap-2 hover:bg-gray-800 transition-colors"
+              >
+                Get started
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </button>
+              <button 
+                onClick={() => document.getElementById('features').scrollIntoView({ behavior: 'smooth' })}
+                className="cursor-pointer bg-white text-gray-900 px-6 py-3 rounded-full font-medium flex items-center gap-2 hover:bg-gray-50 transition-colors border border-gray-200"
+              >
+                Learn more
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </header>
+      </section>
+
+      {/* Hero Image Section */}
+      <section className="px-8 md:px-16 lg:px-24 pb-16">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-cyan-100 via-blue-100 to-indigo-200 h-[400px] md:h-[500px]">
+          {/* Decorative Elements */}
+          <div className="absolute inset-0">
+            {/* Floating circles/spheres */}
+            <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-300/50 rounded-full blur-sm"></div>
+            <div className="absolute top-20 right-20 w-24 h-24 bg-blue-400/40 rounded-full blur-sm"></div>
+            <div className="absolute bottom-20 left-1/4 w-40 h-40 bg-cyan-400/50 rounded-full blur-sm"></div>
+            <div className="absolute top-1/3 left-1/2 w-20 h-20 bg-white/50 rounded-full blur-sm"></div>
+            <div className="absolute bottom-10 right-1/3 w-28 h-28 bg-blue-300/60 rounded-full blur-sm"></div>
+            
+            {/* Central capsule-like shape */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-64 bg-gradient-to-b from-cyan-300/70 to-blue-400/70 rounded-full blur-[2px]"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-28 h-56 bg-gradient-to-b from-white/40 to-cyan-300/50 rounded-full"></div>
+            
+            {/* Small dots pattern */}
+            <div className="absolute top-1/3 left-1/2 transform -translate-x-1/2 grid grid-cols-4 gap-2">
+              {[...Array(16)].map((_, i) => (
+                <div key={i} className="w-3 h-3 bg-cyan-500/80 rounded-full"></div>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats Cards */}
+          <div className="absolute bottom-8 right-8 space-y-4">
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-xl shadow-cyan-200/50">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-gray-900">30,000<span className="text-xl">+</span></div>
+                  <div className="text-sm text-gray-500">NAMASTE terminology codes</div>
+                </div>
+              </div>
+            </div>
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl px-6 py-4 shadow-xl shadow-cyan-200/50">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-full flex items-center justify-center">
+                  <svg className="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-3xl font-bold text-gray-900">529<span className="text-xl">+</span></div>
+                  <div className="text-sm text-gray-500">ICD-11 TM2 disorder codes</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* About Section */}
-      <section className="py-20 px-5 bg-gray-100 text-center">
+      <section className="py-20 px-8 md:px-16 lg:px-24 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6">
-            Bridging Traditional & Modern Medicine
-          </h2>
-          <p className="max-w-3xl mx-auto text-lg text-gray-600 mb-12">
-            India's Ayush sector is rapidly transitioning from paper-based records to interoperable 
-            digital health systems. This API harmonizes <strong className="text-blue-800">NAMASTE</strong> (National AYUSH 
-            Morbidity & Standardized Terminologies Electronic) codes with <strong className="text-blue-800">WHO's ICD-11 
-            Traditional Medicine Module 2</strong>, enabling accurate clinical documentation, 
-            decision support, and compliance with India's 2016 EHR Standards.
-          </p>
-          <div className="flex justify-center gap-12 md:gap-20 flex-wrap">
-            <div className="flex flex-col items-center">
-              <span className="text-5xl font-bold text-blue-600">4,500+</span>
-              <span className="text-gray-500 mt-2">NAMASTE Terms</span>
+          <div className="text-center mb-16">
+            <span className="text-cyan-500 font-medium text-sm uppercase tracking-wider">About the Platform</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
+              Bridging Traditional & Modern Medicine
+            </h2>
+            <p className="max-w-3xl mx-auto text-lg text-gray-600">
+              India's Ayush sector is rapidly transitioning from paper-based records to interoperable 
+              digital health systems. Med Link harmonizes <span className="text-cyan-500 font-semibold">NAMASTE</span> codes 
+              with <span className="text-cyan-500 font-semibold">WHO's ICD-11 Traditional Medicine Module 2</span>, enabling 
+              accurate clinical documentation and compliance with EHR Standards.
+            </p>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center p-8 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl border border-cyan-100">
+              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 mb-2">30,000+</div>
+              <div className="text-gray-600">NAMASTE Terms</div>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="text-5xl font-bold text-blue-600">529</span>
-              <span className="text-gray-500 mt-2">TM2 Disorder Codes</span>
+            <div className="text-center p-8 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl border border-cyan-100">
+              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 mb-2">529</div>
+              <div className="text-gray-600">TM2 Disorder Codes</div>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="text-5xl font-bold text-blue-600">196</span>
-              <span className="text-gray-500 mt-2">Pattern Codes</span>
+            <div className="text-center p-8 bg-gradient-to-br from-cyan-50 to-blue-50 rounded-2xl border border-cyan-100">
+              <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 mb-2">196</div>
+              <div className="text-gray-600">Pattern Codes</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 px-5 bg-white">
+      <section id="features" className="py-20 px-8 md:px-16 lg:px-24 bg-[#f0f5ff]">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 text-center mb-14">
-            Key Features
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="text-center mb-16">
+            <span className="text-cyan-500 font-medium text-sm uppercase tracking-wider">Features</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4">
+              Key Capabilities
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, index) => (
               <div 
                 key={index} 
-                className="bg-gray-50 p-8 rounded-xl border border-gray-200 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+                className="bg-white p-8 rounded-2xl hover:shadow-xl transition-all duration-300 group"
               >
-                <span className="text-4xl block mb-4">{feature.icon}</span>
-                <h3 className="text-xl font-semibold text-blue-900 mb-3">{feature.title}</h3>
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-100 to-blue-100 rounded-xl flex items-center justify-center text-cyan-600 mb-5 group-hover:bg-gradient-to-br group-hover:from-cyan-400 group-hover:to-blue-500 group-hover:text-white transition-all">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
@@ -147,69 +242,66 @@ const Landing = () => {
         </div>
       </section>
 
-      {/* API Endpoints Section */}
-      <section className="py-20 px-5 bg-blue-900 text-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            API Endpoints
-          </h2>
-          <div className="max-w-4xl mx-auto bg-white/5 rounded-xl overflow-hidden">
-            <div className="hidden md:grid grid-cols-[80px_1fr_1fr] gap-5 px-6 py-4 bg-white/10 font-bold text-sm uppercase tracking-wide">
-              <span>Method</span>
-              <span>Endpoint</span>
-              <span>Description</span>
-            </div>
-            {apiEndpoints.map((api, index) => (
-              <div 
-                key={index} 
-                className="grid grid-cols-1 md:grid-cols-[80px_1fr_1fr] gap-2 md:gap-5 px-6 py-4 border-t border-white/10 hover:bg-white/5 transition-colors"
-              >
-                <span className={`font-bold text-xs px-2 py-1 rounded text-center w-fit ${
-                  api.method === 'GET' ? 'bg-green-500' : 'bg-orange-500'
-                }`}>
-                  {api.method}
-                </span>
-                <code className="font-mono text-blue-200">{api.endpoint}</code>
-                <span className="text-gray-300">{api.description}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Standards Compliance Section */}
-      <section className="py-20 px-5 bg-gray-100">
+      <section className="py-20 px-8 md:px-16 lg:px-24 bg-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-blue-900 text-center mb-14">
-            Standards Compliance
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <h3 className="text-xl font-semibold text-blue-900 mb-5">🏛️ India EHR 2016</h3>
+          <div className="text-center mb-16">
+            <span className="text-cyan-500 font-medium text-sm uppercase tracking-wider">Compliance</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4">
+              Standards & Security
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl border border-cyan-100">
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center text-white mb-5 shadow-lg shadow-cyan-200">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">India EHR 2016</h3>
               <ul className="space-y-3">
-                {['FHIR R4 APIs', 'SNOMED CT & LOINC semantics', 'ISO 22600 access control', 'Audit trails for consent'].map((item) => (
-                  <li key={item} className="text-gray-600 border-b border-gray-100 pb-3 flex items-center gap-2">
-                    <span className="text-green-500 font-bold">✓</span> {item}
+                {['FHIR R4 APIs', 'SNOMED CT & LOINC', 'ISO 22600 Access Control', 'Audit Trails'].map((item) => (
+                  <li key={item} className="text-gray-600 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <h3 className="text-xl font-semibold text-blue-900 mb-5">🌍 WHO ICD-11</h3>
+            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl border border-cyan-100">
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center text-white mb-5 shadow-lg shadow-cyan-200">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">WHO ICD-11</h3>
               <ul className="space-y-3">
-                {['Traditional Medicine Module 2', 'Biomedicine integration', 'Global coding rules compliance', 'Real-time API synchronization'].map((item) => (
-                  <li key={item} className="text-gray-600 border-b border-gray-100 pb-3 flex items-center gap-2">
-                    <span className="text-green-500 font-bold">✓</span> {item}
+                {['TM Module 2', 'Biomedicine Integration', 'Global Coding Rules', 'Real-time Sync'].map((item) => (
+                  <li key={item} className="text-gray-600 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="bg-white p-8 rounded-xl shadow-md">
-              <h3 className="text-xl font-semibold text-blue-900 mb-5">🔒 Security</h3>
+            <div className="bg-gradient-to-br from-cyan-50 to-blue-50 p-8 rounded-2xl border border-cyan-100">
+              <div className="w-12 h-12 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center text-white mb-5 shadow-lg shadow-cyan-200">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">Security</h3>
               <ul className="space-y-3">
-                {['OAuth 2.0 authentication', 'ABHA-linked tokens', 'Version tracking', 'Consent metadata'].map((item) => (
-                  <li key={item} className="text-gray-600 border-b border-gray-100 pb-3 flex items-center gap-2">
-                    <span className="text-green-500 font-bold">✓</span> {item}
+                {['OAuth 2.0', 'ABHA Tokens', 'Version Tracking', 'Consent Metadata'].map((item) => (
+                  <li key={item} className="text-gray-600 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {item}
                   </li>
                 ))}
               </ul>
@@ -219,25 +311,38 @@ const Landing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-5 bg-gradient-to-r from-blue-600 to-blue-800 text-white text-center">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Integrate?</h2>
-          <p className="text-lg opacity-90 mb-8">
-            Start using the NAMASTE-ICD11 API to enable dual-coding in your EMR system
+      <section className="py-20 px-8 md:px-16 lg:px-24 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Ready to Integrate?
+          </h2>
+          <p className="text-xl text-sky-100 mb-10">
+            Start using the Med Link API to enable dual-coding in your EMR system
           </p>
           <button 
-            className="bg-green-500 hover:bg-green-600 text-white px-8 py-3.5 rounded-lg text-lg font-semibold transition-all duration-300 hover:-translate-y-0.5"
             onClick={() => navigate('/dashboard')}
+            className="cursor-pointer bg-white text-gray-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors inline-flex items-center gap-2"
           >
             Explore Dashboard
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </button>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-400 py-10 px-5 text-center">
-        <p>NAMASTE-ICD11 API Integration | FHIR R4 Compliant | India EHR Standards 2016</p>
-        <p className="mt-2 text-sm opacity-70">
+      <footer className="py-12 px-8 md:px-16 lg:px-24 bg-gray-900 text-center">
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <div className="w-9 h-9 bg-gradient-to-br from-cyan-400 to-blue-500 rounded-xl flex items-center justify-center">
+            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+          </div>
+          <span className="text-xl font-bold text-white">Med Link</span>
+        </div>
+        <p className="text-gray-400 mb-2">FHIR R4 Compliant | India EHR Standards 2016</p>
+        <p className="text-gray-500 text-sm">
           Supporting Ayurveda, Siddha, Unani & WHO Traditional Medicine Module 2
         </p>
       </footer>
