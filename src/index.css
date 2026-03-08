@@ -1,8 +1,6 @@
-@import "tailwindcss";
-
 @font-face {
   font-family: "main_font";
-  src: url("/fonts/SFPRODISPLAYREGULAR.OTF") format("truetype");
+  src: url("/fonts/sf-pro-display/SFPRODISPLAYREGULAR.OTF") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
@@ -10,3 +8,5 @@
 .main-font {
   font-family: "main_font", sans-serif;
 }
+
+@import "tailwindcss";
